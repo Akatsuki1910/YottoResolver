@@ -1,1 +1,1 @@
-# YahtzeeResolver
+# YottoResolver
