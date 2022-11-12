@@ -43,7 +43,7 @@ div
   Only
   FullHouse
   FourNumbers
-  SS
+  SS(:dice='sDiceRef')
   BS(:dice='sDiceRef')
   Yotto
   Choice
