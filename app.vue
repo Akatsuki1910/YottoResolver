@@ -45,7 +45,7 @@ div
   FourNumbers
   SS(:dice='sDiceRef')
   BS(:dice='sDiceRef')
-  Yotto
+  Yotto(:dice='sDiceRef')
   Choice
 </template>
 
