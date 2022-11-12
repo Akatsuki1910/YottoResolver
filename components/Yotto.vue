@@ -1,5 +1,29 @@
 <script setup lang="ts">
-import { r } from '@/assets/ts/index'
+import { dCount, r } from '@/assets/ts/index'
+
+interface Props {
+  dice: number[]
+}
+
+const props = withDefaults(defineProps<Props>(), { dice: () => [] })
+
+const diceArr = ref<[number, number][]>([])
+
+watch(
+  () => props.dice,
+  () => {
+    for (let i = 1; i <= 6; i++) {
+      let v = 0
+      const c = props.dice.filter((v) => v === i).length
+      if (props.dice.length === 0 || c === props.dice.length) {
+        v = r(Math.pow(1 / 6, 5 - c), 5)
+      }
+      if (c !== props.dice.length) v = 0
+      diceArr.value[i - 1] = [i, v]
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template lang="pug">
@@ -8,7 +32,7 @@ table
     tr
       th(colspan='2') yotto
   tbody
-    tr(v-for='i in 6', :key='`y_tr_${i}`')
-      td {{ i }}
-      td {{ r(Math.pow(1 / 6, 5), 5) }}
+    tr(v-for='(d, i) in diceArr', :key='`y_tr_${i}`')
+      td {{ d[0] }}
+      td {{ d[1] }}
 </template>
