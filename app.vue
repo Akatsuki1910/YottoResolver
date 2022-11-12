@@ -1,18 +1,34 @@
 <script setup lang="ts">
 import { r } from '@/assets/ts/index'
 
+const diceRef = ref<HTMLInputElement[]>([])
+const diceSRef = ref<HTMLOptionElement[]>([])
 const diceArr = ref<number[]>(Array(5).fill(0))
 const dice = () => {
   for (const i in diceArr.value) {
-    diceArr.value[+i] = Math.floor(Math.random() * 6) + 1
+    if (!diceRef.value[i].checked) {
+      diceArr.value[i] = Math.floor(Math.random() * 6) + 1
+    }
+  }
+}
+const select = () => {
+  for (const i in diceArr.value) {
+    diceArr.value[i] = +diceSRef.value[i].value
   }
 }
 </script>
 
 <template lang="pug">
-div
-  p(v-for='(d, i) in diceArr', :key='`dice_${i}`') {{ d }}
+.dices
+  .dice(v-for='(d, i) in diceArr', :key='`dice_${i}`')
+    input(type='checkbox', :id='`d${i}`', ref='diceRef')
+    label(:for='`d${i}`') {{ d }}
   button(@click='dice') dices
+.selects
+  .select(v-for='i in 5', :key='`dice_s_${i}`')
+    select(ref='diceSRef')
+      option(v-for='l in 6', :key='`dice_s_${i}_${l}`') {{ l }}
+  button(@click='select') select
 div
   Only
   FullHouse
@@ -22,3 +38,15 @@ div
   Yotto
   Choice
 </template>
+
+<style lang="scss" scoped>
+.dices,
+.selects {
+  border: 1px solid black;
+  display: flex;
+}
+.dice,
+.select {
+  display: flex;
+}
+</style>
