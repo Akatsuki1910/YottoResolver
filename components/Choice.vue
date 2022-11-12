@@ -26,7 +26,7 @@ table
     tr
       th(colspan='2') choice
   tbody
-    tr(v-for='s in scoreArr', :key='`c_tr_${i}`')
+    tr(v-for='s in scoreArr', :key='`c_tr_${s}`')
       td {{ s[0] }}
       td {{ s[1] }}
 </template>
