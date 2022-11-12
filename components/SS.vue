@@ -7,12 +7,11 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), { dice: () => [] })
 
-const diceArr = ref<[string, number][]>(Array(2).fill(0))
+const diceArr = ref<[string, number][]>([])
 
 watch(
   () => props.dice,
   () => {
-    console.log(props.dice)
     for (let i = 1; i <= 3; i++) {
       let v = 0
       const c = dCount(props.dice, [i, i + 1, i + 2, i + 3])
