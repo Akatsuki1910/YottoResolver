@@ -42,7 +42,7 @@ const change = (i: number) => {
 div
   Only
   FullHouse
-  FourNumbers
+  FourNumbers(:dice='sDiceRef')
   SS(:dice='sDiceRef')
   BS(:dice='sDiceRef')
   Yotto(:dice='sDiceRef')
