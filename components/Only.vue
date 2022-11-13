@@ -22,6 +22,7 @@ watch(
           5,
         )
         if (c !== 0 && c >= l) v = 1
+        if (c !== 0 && c - 1 >= l) v = 0
         if (c === 0 && props.dice.length > 5 - l) v = 0
 
         vArr.push(v)
