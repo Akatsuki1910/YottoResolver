@@ -41,7 +41,7 @@ const change = (i: number) => {
   button(@click='select') select
 div
   Only
-  FullHouse
+  FullHouse(:dice='sDiceRef')
   FourNumbers(:dice='sDiceRef')
   SS(:dice='sDiceRef')
   BS(:dice='sDiceRef')
