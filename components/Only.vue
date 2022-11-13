@@ -21,8 +21,8 @@ watch(
             Math.pow(5 / 6, Math.max(5 - props.dice.length - l, 0)),
           5,
         )
-        if (c !== 0 && c >= l) v = 1
-        if (c !== 0 && c - 1 >= l) v = 0
+        if (c !== 0 && c === l) v = 1
+        if (c !== 0 && c > l) v = 0
         if (c === 0 && props.dice.length > 5 - l) v = 0
 
         vArr.push(v)
