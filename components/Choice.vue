@@ -1,23 +1,70 @@
 <script setup lang="ts">
-import { r } from '@/assets/ts/index'
+import { dCount, r } from '@/assets/ts/index'
 
-const scoreMap = new Map<number, number>()
-
-for (let i = 1; i <= Math.pow(6, 5); i++) {
-  let addScore = 0
-  for (let l = 0; l < 5; l++) {
-    const s = (Math.floor((i - 1) / Math.pow(6, l)) % 6) + 1
-    addScore += s
-  }
-  scoreMap.set(
-    addScore,
-    scoreMap.has(addScore) ? scoreMap.get(addScore)! + 1 : 1,
-  )
+interface Props {
+  dice: number[]
 }
 
-const scoreArr = [...scoreMap]
-  .sort((a, b) => (a[0] > b[0] ? 1 : -1))
-  .map((v) => [v[0], r(v[1] / Math.pow(6, 5), 5)])
+const props = withDefaults(defineProps<Props>(), { dice: () => [] })
+
+let diceArr = ref<[number, number][]>([])
+
+watch(
+  () => props.dice,
+  () => {
+    const scoreMap = new Map<number, number>()
+    let sMapNum = 0
+
+    for (let i = 5; i <= 30; i++) {
+      scoreMap.set(i, 0)
+    }
+
+    const sArrSet = new Set()
+
+    for (let a = 1; a <= 6; a++) {
+      for (let b = 1; b <= 6; b++) {
+        for (let c = 1; c <= 6; c++) {
+          for (let d = 1; d <= 6; d++) {
+            for (let e = 1; e <= 6; e++) {
+              let addScore = 0
+              const sArr = [a, b, c, d, e]
+
+              sArr.sort()
+              const sArrKey = sArr.reduce((j, k) => j + k, '')
+
+              if (sArrSet.has(sArrKey)) continue
+
+              sArrSet.add(sArrKey)
+
+              addScore += sArr.reduce((j, k) => j + k, 0)
+
+              for (const d of props.dice) {
+                const idx = sArr.indexOf(d)
+                if (idx >= 0) {
+                  sArr.splice(idx, 1)
+                }
+              }
+              if (5 - sArr.length === props.dice.length) {
+                scoreMap.set(
+                  addScore,
+                  scoreMap.has(addScore) ? scoreMap.get(addScore)! + 1 : 1,
+                )
+                sMapNum++
+              }
+            }
+          }
+        }
+      }
+    }
+
+    console.log(sMapNum)
+
+    diceArr.value = [...scoreMap]
+      .sort((a, b) => (a[0] > b[0] ? 1 : -1))
+      .map((v) => [v[0], r(v[1] / sMapNum, 5)])
+  },
+  { immediate: true },
+)
 </script>
 
 <template lang="pug">
@@ -26,7 +73,7 @@ table
     tr
       th(colspan='2') choice
   tbody
-    tr(v-for='s in scoreArr', :key='`c_tr_${s}`')
+    tr(v-for='s in diceArr', :key='`c_tr_${s}`')
       td {{ s[0] }}
       td {{ s[1] }}
 </template>
