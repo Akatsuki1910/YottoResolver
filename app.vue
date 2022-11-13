@@ -15,10 +15,12 @@ const select = () => {
   for (const i in diceArr.value) {
     diceArr.value[i] = +diceSRef.value[i].value
   }
+
+  change()
 }
 
 const sDiceRef = ref<number[]>([])
-const change = (i: number) => {
+const change = () => {
   sDiceRef.value = []
   for (const i in diceArr.value) {
     if (diceRef.value[i].checked) {
@@ -31,7 +33,7 @@ const change = (i: number) => {
 <template lang="pug">
 .dices
   .dice(v-for='(d, i) in diceArr', :key='`dice_${i}`')
-    input(type='checkbox', :id='`d${i}`', ref='diceRef', @change='change(i)')
+    input(type='checkbox', :id='`d${i}`', ref='diceRef', @change='change()')
     label(:for='`d${i}`') {{ d }}
   button(@click='dice') dices
 .selects
