@@ -57,8 +57,6 @@ watch(
       }
     }
 
-    console.log(sMapNum)
-
     diceArr.value = [...scoreMap]
       .sort((a, b) => (a[0] > b[0] ? 1 : -1))
       .map((v) => [v[0], r(v[1] / sMapNum, 5)])
