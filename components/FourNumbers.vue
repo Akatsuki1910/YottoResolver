@@ -7,19 +7,29 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), { dice: () => [] })
 
-const diceArr = ref<[number, number][]>([])
+const diceArr = ref<[number, number[]][]>([])
 
 watch(
   () => props.dice,
   () => {
     for (let i = 1; i <= 6; i++) {
-      let v = 0
+      const vArr: number[] = []
       const c = props.dice.filter((v) => v === i).length
-      if (props.dice.length === 0 || c === props.dice.length) {
-        v = r(Math.pow(1 / 6, Math.max(4 - c, 0)), 5)
+      for (let l = 1; l <= 6; l++) {
+        const b = i === l ? 0 : props.dice.includes(l) ? 1 : 0
+
+        let v = r(
+          Math.pow(1 / 6, Math.max(4 - c, 0)) *
+            Math.pow(1 / 6, Math.max(1 - b, 0)),
+          5,
+        )
+
+        if (props.dice.length - c > 2) v = 0
+        if (props.dice.length !== c + b) v = 0
+
+        vArr.push(v)
       }
-      if (c !== props.dice.length) v = 0
-      diceArr.value[i - 1] = [i, v]
+      diceArr.value[i - 1] = [i, vArr]
     }
   },
   { immediate: true },
@@ -30,9 +40,12 @@ watch(
 table
   thead
     tr
-      th(colspan='2') four numbers
+      th(colspan='7') four numbers
   tbody
+    tr
+      td 4個 / 1個
+      td(v-for='i in 6', :key='`fn_td_${i}`') {{ i }}
     tr(v-for='(d, i) in diceArr', :key='`fn_tr_${i}`')
       td {{ d[0] }}
-      td {{ d[1] }}
+      td(v-for='(dd, l) in d[1]', :key='`fn_td_${i}_${l}`') {{ dd }}
 </template>
