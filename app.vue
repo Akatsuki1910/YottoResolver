@@ -40,7 +40,7 @@ const change = (i: number) => {
       option(v-for='l in 6', :key='`dice_s_${i}_${l}`') {{ l }}
   button(@click='select') select
 div
-  Only
+  Only(:dice='sDiceRef')
   FullHouse(:dice='sDiceRef')
   FourNumbers(:dice='sDiceRef')
   SS(:dice='sDiceRef')
