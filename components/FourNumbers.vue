@@ -16,7 +16,7 @@ watch(
       const vArr: number[] = []
       const c = props.dice.filter((v) => v === i).length
       for (let l = 1; l <= 6; l++) {
-        const b = i === l ? 0 : props.dice.includes(l) ? 1 : 0
+        const b = i === l ? 0 : props.dice.filter((v) => v === l).length
 
         let v = r(
           Math.pow(1 / 6, Math.max(4 - c, 0)) *
@@ -24,7 +24,8 @@ watch(
           5,
         )
 
-        if (props.dice.length - c > 2) v = 0
+        if (c > 4) v = 0
+        if (b > 1) v = 0
         if (props.dice.length !== c + b) v = 0
 
         vArr.push(v)
