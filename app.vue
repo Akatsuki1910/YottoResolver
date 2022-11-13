@@ -46,7 +46,7 @@ div
   SS(:dice='sDiceRef')
   BS(:dice='sDiceRef')
   Yotto(:dice='sDiceRef')
-  Choice
+  Choice(:dice='sDiceRef')
 </template>
 
 <style lang="scss" scoped>
