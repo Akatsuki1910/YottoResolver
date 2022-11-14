@@ -45,5 +45,5 @@ table
       td(v-for='i in 5', :key='`only_td_${i}`') {{ i }}
     tr(v-for='(d, i) in diceArr', :key='`only_tr_${i}`')
       td {{ d[0] }}
-      td(v-for='(dd, l) in d[1]', :key='`only_td_${i}_${l}`') {{ dd }}
+      TableTd(v-for='(dd, l) in d[1]', :key='`only_td_${i}_${l}`', :num='dd')
 </template>

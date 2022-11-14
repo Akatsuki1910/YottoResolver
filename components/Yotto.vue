@@ -34,5 +34,5 @@ table
   tbody
     tr(v-for='(d, i) in diceArr', :key='`y_tr_${i}`')
       td {{ d[0] }}
-      td {{ d[1] }}
+      TableTd(:num='d[1]')
 </template>

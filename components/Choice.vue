@@ -71,7 +71,7 @@ table
     tr
       th(colspan='2') choice
   tbody
-    tr(v-for='s in diceArr', :key='`c_tr_${s}`')
-      td {{ s[0] }}
-      td {{ s[1] }}
+    tr(v-for='d in diceArr', :key='`c_tr_${s}`')
+      td {{ d[0] }}
+      TableTd(:num='d[1]')
 </template>
